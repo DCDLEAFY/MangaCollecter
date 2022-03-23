@@ -1,2 +1,2 @@
 # MangaCollecter
-A passion project due to the lack of available tools. More in ReadMe.md
+A passion project due to the lack of available tools. 
