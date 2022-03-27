@@ -1,5 +1,6 @@
 //Manga Api
 import pkg from '@specify_/mangascraper';
+import { rejects } from 'assert';
 const { Manganato } = pkg;
 
 //FileStream
@@ -56,10 +57,14 @@ async function getPageLinks(url){
     await downloadImage(pageLinks[0], "test.jpg");
 }
 
-//Download pages of link - WIP - Does not work 
+//Download pages of link - WIP - Works but needs Axios
 async function downloadImage(url, filepath){
     client.get(url, (res) => {
-        res.pipe(fs.createWriteStream(filepath));
+        if(res.statusCode == 200){
+            res.pipe(fs.createWriteStream(filepath));
+        } else {
+            console.log("Request failed with a status code of: " + res.statusCode);
+        }
     });
 }
 
