@@ -1,7 +1,12 @@
+//Manga Api
 import pkg from '@specify_/mangascraper';
 const { Manganato } = pkg;
 
+//FileStream
+import fs from 'fs';
+import client from 'https';
 
+//Pupeteer - input here
 
 var savedMangaName = [];
 var savedMangaUrl = []
@@ -44,51 +49,19 @@ async function getPageLinks(url){
     const manganato = new Manganato();
     const meta = await manganato.getMangaMeta(url);
     const pageLinks = await manganato.getPages(meta.chapters[0].url);
-    console.log(images);
+    console.log(pageLinks); // returns a list of links to the images
+
+
+    //Test Area
+    await downloadImage(pageLinks[0], "test.jpg");
 }
 
-await getPageLinks('https://readmanganato.com/manga-gf983740');
+//Download pages of link - WIP - Does not work 
+async function downloadImage(url, filepath){
+    client.get(url, (res) => {
+        res.pipe(fs.createWriteStream(filepath));
+    });
+}
 
-// class Factory{
-//     constructor(choice, stringy){
-//         this. manganato = new Manganato();
-//         this.choice = choice;
-//         this.stringy = stringy;
-//     }
-
-//     async ifUrl(){
-//         try{
-//             this.meta = await this.manganato.getMangaMeta(this.stringy);
-//         } catch (e){
-//             console.log(e);
-//         }
-        
-//     }
-
-//     async ifName(){
-//         try {
-//             this.mangas = await this.manganato.search(this.stringy);
-//             this.meta = await this.manganato.getMangaMeta(this.mangas[0].url);
-//         } catch (e) {
-//             console.log(e);
-//         }
-//     }
-
-//     async init(){
-//         if(this.choice=='name'){
-//             this.ifName();
-//         } else {
-//             this.ifUrl();
-//         }
-
-//         return this.meta;
-//     }
-
-//     get meta(){
-//         return this.meta;
-//     }
-
-//     set meta(meta){
-//         this.meta = meta;
-//     }
-// }
+//Test Area - Line 56
+(await getPageLinks('https://readmanganato.com/manga-gf983740'));
