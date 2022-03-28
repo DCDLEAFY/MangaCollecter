@@ -1,6 +1,5 @@
 //Manga Api
 import pkg from '@specify_/mangascraper';
-import { rejects } from 'assert';
 const { Manganato } = pkg;
 
 //FileStream
@@ -25,7 +24,7 @@ async function saveMangaUrl(mangaUrl){
 
 //Save Manga with Manganato Name
 async function saveMangaName(mangaName){
-
+    const manganato = new Manganato();
 
     const mangas = await manganato.search(mangaName);
     const meta = await manganato.getMangaMeta(mangas[0].url);
