@@ -1,13 +1,30 @@
 //Manga Api
-import pkg from '@specify_/mangascraper';
-const { Manganato } = pkg;
+import mangpkg from '@specify_/mangascraper';
+const { Manganato } = mangpkg;
+// import { Manganato } from '@specify_/mangascraper'; //Look into this
 
 //FileStream
 import fs from 'fs';
 import client from 'https';
 
-//Pupeteer - input here
+//Pupeteer
+import puppkg from 'puppeteer';
+const { puppeteer } = puppkg;
+// import { puppeteer } from 'puppeteer'; //Look into this
 
+function urlCheck(){
+    const url = process.argv[2];
+    if(!url){
+        throw "Please Provide URL!";
+    }
+}
+
+async function run(){
+    const browser = await puppeteer.launch();
+}
+
+
+//Manga Related Items
 var savedMangaName = [];
 var savedMangaUrl = []
 
@@ -69,3 +86,5 @@ async function downloadImage(url, filepath){
 
 //Test Area - Line 56
 (await getPageLinks('https://readmanganato.com/manga-gf983740'));
+
+//Puppeteer Test Area
