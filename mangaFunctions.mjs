@@ -7,22 +7,6 @@ const { Manganato } = mangpkg;
 import fs from 'fs';
 import client from 'https';
 
-//Pupeteer
-import puppkg from 'puppeteer';
-const { puppeteer } = puppkg;
-// import { puppeteer } from 'puppeteer'; //Look into this
-
-function urlCheck(){
-    const url = process.argv[2];
-    if(!url){
-        throw "Please Provide URL!";
-    }
-}
-
-async function run(){
-    const browser = await puppeteer.launch();
-}
-
 
 //Manga Related Items
 var savedMangaName = [];
@@ -85,6 +69,4 @@ async function downloadImage(url, filepath){
 }
 
 //Test Area - Line 56
-(await getPageLinks('https://readmanganato.com/manga-gf983740'));
-
-//Puppeteer Test Area
+// (await getPageLinks('https://readmanganato.com/manga-gf983740'));
