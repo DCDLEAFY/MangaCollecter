@@ -1,42 +1,39 @@
 //Manga Api
 import mangpkg from '@specify_/mangascraper';
 const { Manganato } = mangpkg;
+
 // import { Manganato } from '@specify_/mangascraper'; //Look into this
+
 
 //FileStream
 import fs from 'fs';
 import client from 'https';
 
 
-//Manga Related Items
-var savedMangaName = [];
-var savedMangaUrl = []
-
 //Save Manga with Manganato URL
-async function saveMangaUrl(mangaUrl){
-    
-
+export async function saveMangaUrl(mangaUrl, nameArray, urlArray){
+    const manganato = new Manganato();
     const meta = await manganato.getMangaMeta(mangaUrl);
     
     //Saving both the url and the name, Same ArrayIDs
-    savedMangaUrl.push(mangaUrl);
-    savedMangaName.push(meta.title.main);
+    urlArray.push(mangaUrl);
+    nameArray.push(meta.title.main);
 }
 
 //Save Manga with Manganato Name
-async function saveMangaName(mangaName){
+export async function saveMangaName(mangaName, nameArray, urlArray){
     const manganato = new Manganato();
 
     const mangas = await manganato.search(mangaName);
     const meta = await manganato.getMangaMeta(mangas[0].url);
     
     //Saving both the url and the name, Same ArrayIDs
-    savedMangaName.push(mangaName);
-    savedMangaUrl.push(meta.title);
+    nameArray.push(mangaName);
+    urlArray.push(mangas[0].url);
 }
 
 //Query Manga for information
-async function queryMangaName(mangaName){
+export async function queryMangaName(mangaName){
     const manganato = new Manganato();
 
     const mangas = await manganato.search(mangaName);
@@ -45,7 +42,7 @@ async function queryMangaName(mangaName){
 }
 
 //Get Pages links of URL
-async function getPageLinks(url){
+export async function getPageLinks(url){
 
     const manganato = new Manganato();
     const meta = await manganato.getMangaMeta(url);
@@ -58,7 +55,7 @@ async function getPageLinks(url){
 }
 
 //Download pages of link - WIP - Works but needs Axios
-async function downloadImage(url, filepath){
+export async function downloadImage(url, filepath){
     client.get(url, (res) => {
         if(res.statusCode == 200){
             res.pipe(fs.createWriteStream(filepath));
@@ -69,4 +66,4 @@ async function downloadImage(url, filepath){
 }
 
 //Test Area - Line 56
-// (await getPageLinks('https://readmanganato.com/manga-gf983740'));
+//(await getPageLinks('https://readmanganato.com/manga-gf983740'));
